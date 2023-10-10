@@ -12,6 +12,7 @@ struct LandingMenuOption {
 struct LandingMenu {
     struct LandingMenuOption* options;
     Gfx** optionText;
+    Gfx** flavorText;
     short selectedItem;
     short optionCount;
     short darkenBackground;

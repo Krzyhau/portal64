@@ -68,6 +68,10 @@ void landingMenuInit(struct LandingMenu* landingMenu, struct LandingMenuOption* 
     landingMenu->selectedItem = 0;
     landingMenu->optionCount = optionCount;
     landingMenu->darkenBackground = darkenBackground;
+
+    landingMenu->flavorText = malloc(sizeof(Gfx *) * 2);
+    landingMenu->flavorText[0] = menuBuildText(&gDejaVuSansFont, "TRIPLE LASER", 80, 110);
+    landingMenu->flavorText[1] = menuBuildText(&gDejaVuSansFont, "64", 152, 84);
 }
 
 struct LandingMenuOption* landingMenuUpdate(struct LandingMenu* landingMenu) {
@@ -108,5 +112,9 @@ void landingMenuRender(struct LandingMenu* landingMenu, struct RenderState* rend
         menuSetRenderColor(renderState, landingMenu->selectedItem == i, &gSelectionGray, &gColorWhite);
         gSPDisplayList(renderState->dl++, landingMenu->optionText[i]);
     }
+    gDPSetEnvColor(renderState->dl++, 255, 128, 128, 255);
+    gSPDisplayList(renderState->dl++, landingMenu->flavorText[0]);
+    gDPSetEnvColor(renderState->dl++, 255, 0, 0, 255);
+    gSPDisplayList(renderState->dl++, landingMenu->flavorText[1]);
     gSPDisplayList(renderState->dl++, ui_material_revert_list[DEJAVU_SANS_INDEX]);
 }
