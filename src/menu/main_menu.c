@@ -13,7 +13,7 @@
 #include "../build/src/audio/clips.h"
 
 struct LandingMenuOption gMainMenuOptions[] = {
-    {"NEW GAME", GameMenuStateNewGame},
+    {"START TRIPLE LASER", GameMenuStateNewGame},
     {"LOAD GAME", GameMenuStateLoadGame},
     {"OPTIONS", GameMenuStateOptions},
 };

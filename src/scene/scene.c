@@ -38,15 +38,15 @@ struct LandingMenuOption gPauseMenuOptions[] = {
     {"RESUME", GameMenuStateResumeGame},
     {"SAVE GAME", GameMenuStateSaveGame},
     {"LOAD GAME", GameMenuStateLoadGame},
-    {"NEW GAME", GameMenuStateNewGame},
+    {"RESTART", GameMenuStateNewGame},
     {"OPTIONS", GameMenuStateOptions},
     {"QUIT", GameMenuStateQuit},
 };
 
 Lights1 gSceneLights = gdSPDefLights1(128, 128, 128, 128, 128, 128, 0, 127, 0);
 
-#define LEVEL_INDEX_WITH_GUN_0  2
-#define LEVEL_INDEX_WITH_GUN_1  8
+#define LEVEL_INDEX_WITH_GUN_0  0
+#define LEVEL_INDEX_WITH_GUN_1  0
 
 #define FADE_IN_
 
@@ -632,7 +632,8 @@ void sceneUpdate(struct Scene* scene) {
 
                 transformConcat(&exitInverse, &scene->player.lookTransform, &relativeExit);
                 quatMultVector(&exitInverse.rotation, &scene->player.body.velocity, &relativeVelocity);
-                levelQueueLoad(NEXT_LEVEL, &relativeExit, &relativeVelocity);
+                // levelQueueLoad(NEXT_LEVEL, &relativeExit, &relativeVelocity);
+                levelQueueLoad(MAIN_MENU, NULL, NULL);
             } else {
                 rigidBodyTeleport(
                     &scene->player.body,

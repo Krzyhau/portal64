@@ -9,6 +9,8 @@
 #include "../scene/render_plan.h"
 #include "../controls/controller.h"
 
+#include "../levels/levels.h"
+
 #include "../build/assets/test_chambers/test_chamber_00/test_chamber_00.h"
 
 void gameMenuInit(struct GameMenu* gameMenu, struct LandingMenuOption* options, int optionCount, int darkenBackground) {
@@ -45,7 +47,8 @@ void gameMenuUpdate(struct GameMenu* gameMenu) {
             break;
         }
         case GameMenuStateNewGame:
-            gameMenu->state = gameMenuDirectionToState(newGameUpdate(&gameMenu->newGameMenu), gameMenu->state);
+            levelQueueLoad(0, NULL, NULL);
+            //gameMenu->state = gameMenuDirectionToState(newGameUpdate(&gameMenu->newGameMenu), gameMenu->state);
             break;
         case GameMenuStateLoadGame:
             gameMenu->state = gameMenuDirectionToState(loadGameUpdate(&gameMenu->loadGameMenu), gameMenu->state);
@@ -83,7 +86,7 @@ void gameMenuRender(struct GameMenu* gameMenu, struct RenderState* renderState, 
             landingMenuRender(&gameMenu->landingMenu, renderState, task);
             break;
         case GameMenuStateNewGame:
-            newGameRender(&gameMenu->newGameMenu, renderState, task);
+            //newGameRender(&gameMenu->newGameMenu, renderState, task);
             break;
         case GameMenuStateLoadGame:
             loadGameRender(&gameMenu->loadGameMenu, renderState, task);
