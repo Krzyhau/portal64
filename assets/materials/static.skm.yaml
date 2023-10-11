@@ -1165,3 +1165,18 @@ materials:
     gSPGeometryMode:
       clear: [G_CULL_BACK, G_CULL_FRONT, G_ZBUFFER]
       set: [G_FOG]
+
+  laser_emitter:
+    gDPSetTile: 
+      filename: ./models/props/laser_emitter.png
+      siz: G_IM_SIZ_16b
+      s:
+        wrap: false
+      t:
+        wrap: false
+
+    gDPSetCombineMode: G_CC_MODULATEI
+    gDPSetCycleType: G_CYC_1CYCLE
+
+    gSPGeometryMode:
+      set: [G_LIGHTING, G_SHADE, G_CULL_BACK]
