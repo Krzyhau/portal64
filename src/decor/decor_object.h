@@ -11,6 +11,8 @@ enum DecorObjectFlags {
     // location if they escape the level
     DecorObjectFlagsImportant = (1 << 0),
     DecorObjectFlagsMuted = (1 << 1),
+
+    DecorObjectFlagsPowered = (1 << 2),
 };
 
 struct DecorObjectDefinition {
@@ -20,6 +22,7 @@ struct DecorObjectDefinition {
     short dynamicModelIndex;
     short materialIndex;
     short materialIndexFizzled;
+    short materialIndexPowered;
     short soundClipId;
     short soundFizzleId;
     short flags;
@@ -35,6 +38,7 @@ struct DecorObject {
     short dynamicId;
     ALSndId playingSound;
     float fizzleTime;
+    short flags;
 };
 
 struct DecorObject* decorObjectNew(struct DecorObjectDefinition* definition, struct Transform* at, int room);

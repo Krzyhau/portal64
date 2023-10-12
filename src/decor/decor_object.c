@@ -43,11 +43,18 @@ void decorObjectRender(void* data, struct DynamicRenderDataList* renderList, str
 
     transformToMatrixL(&object->rigidBody.transform, matrix, SCENE_SCALE);
 
+    short materialIndex = object->definition->materialIndex;
+    if(object->fizzleTime > 0.0f) {
+        materialIndex = object->definition->materialIndexFizzled;
+    }else if(object->flags & DecorObjectFlagsPowered) {
+        materialIndex = object->definition->materialIndexPowered;
+    }
+
     dynamicRenderListAddDataTouchingPortal(
         renderList, 
         decorBuildFizzleGfx(dynamicAssetModel(object->definition->dynamicModelIndex), object->fizzleTime, renderState), 
         matrix, 
-        (object->fizzleTime > 0.0f) ? object->definition->materialIndexFizzled : object->definition->materialIndex, 
+        materialIndex, 
         &object->rigidBody.transform.position, 
         NULL,
         object->rigidBody.flags

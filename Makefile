@@ -241,7 +241,9 @@ DYNAMIC_MODEL_LIST = assets/models/cube/cube.blend \
 	assets/models/props/box_dropper_glass.blend \
 	assets/models/props/portal_cleanser.blend \
 	assets/models/props/light_rail_endcap.blend \
-	assets/models/props/laser_emitter.blend
+	assets/models/props/laser_emitter.blend \
+	assets/models/props/laser_catcher.blend \
+	assets/models/cube/laser_cube.blend
 
 DYNAMIC_ANIMATED_MODEL_LIST = assets/models/pedestal.blend \
 	assets/models/props/box_dropper.blend \

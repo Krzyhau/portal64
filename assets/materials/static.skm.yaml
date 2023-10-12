@@ -1180,3 +1180,63 @@ materials:
 
     gSPGeometryMode:
       set: [G_LIGHTING, G_SHADE, G_CULL_BACK]
+
+  laser_catcher:
+    gDPSetTile: 
+      filename: ./models/props/laser_catcher.png
+      siz: G_IM_SIZ_16b
+      s:
+        wrap: false
+      t:
+        wrap: false
+
+    gDPSetCombineMode: G_CC_MODULATEI
+    gDPSetCycleType: G_CYC_1CYCLE
+
+    gSPGeometryMode:
+      set: [G_LIGHTING, G_SHADE, G_CULL_BACK]
+
+  laser_cube:
+    gDPSetTile: 
+      filename: ./models/props/laser_cube.png
+      siz: G_IM_SIZ_16b
+      s:
+        wrap: false
+      t:
+        wrap: false
+
+    gDPSetCombineMode: G_CC_MODULATEI
+    gDPSetCycleType: G_CYC_1CYCLE
+
+    gSPGeometryMode:
+      set: [G_LIGHTING, G_SHADE, G_CULL_BACK]
+
+  laser_catcher_activated:
+    gDPSetTile: 
+      filename: ./models/props/laser_catcher_activated.png
+      siz: G_IM_SIZ_16b
+      s:
+        wrap: false
+      t:
+        wrap: false
+
+    gDPSetCombineMode: G_CC_MODULATEI
+    gDPSetCycleType: G_CYC_1CYCLE
+
+    gSPGeometryMode:
+      set: [G_CULL_BACK]
+
+  laser_cube_activated:
+    gDPSetTile: 
+      filename: ./models/props/laser_cube_activated.png
+      siz: G_IM_SIZ_16b
+      s:
+        wrap: false
+      t:
+        wrap: false
+
+    gDPSetCombineMode: G_CC_MODULATEI
+    gDPSetCycleType: G_CYC_1CYCLE
+
+    gSPGeometryMode:
+      set: [G_CULL_BACK]
