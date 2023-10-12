@@ -252,6 +252,56 @@ end
 
 sk_definition_writer.add_definition('security_cameras', 'struct SecurityCameraDefinition[]', '_geo', security_cameras)
 
+local laser_emitters = {}
+
+for _, laser_emitter_element in pairs(sk_scene.nodes_for_type('@laser_emitter')) do
+    local position, rotation = laser_emitter_element.node.full_transformation:decompose()
+
+    local room_index = room_export.node_nearest_room_index(laser_emitter_element.node)
+
+    table.insert(laser_emitters, {
+        position,
+        rotation * sk_math.axis_angle(sk_math.vector3(1, 0, 0), math.pi * 0.5),
+        room_index,
+        signals.signal_index_for_name(laser_emitter_element.arguments[1]),
+    })
+end
+
+sk_definition_writer.add_definition('laser_emitters', 'struct LaserEmitterDefinition[]', '_geo', laser_emitters)
+
+local laser_cubes = {}
+
+for _, laser_cube_element in pairs(sk_scene.nodes_for_type('@laser_cube')) do
+    local position, rotation = laser_cube_element.node.full_transformation:decompose()
+
+    local room_index = room_export.node_nearest_room_index(laser_cube_element.node)
+
+    table.insert(laser_cubes, {
+        position,
+        rotation * sk_math.axis_angle(sk_math.vector3(1, 0, 0), math.pi * 0.5),
+        room_index,
+    })
+end
+
+sk_definition_writer.add_definition('laser_cubes', 'struct LaserCubeDefinition[]', '_geo', laser_cubes)
+
+local laser_catchers = {}
+
+for _, laser_catcher_element in pairs(sk_scene.nodes_for_type('@laser_catcher')) do
+    local position, rotation = laser_catcher_element.node.full_transformation:decompose()
+
+    local room_index = room_export.node_nearest_room_index(laser_catcher_element.node)
+
+    table.insert(laser_catchers, {
+        position,
+        rotation * sk_math.axis_angle(sk_math.vector3(1, 0, 0), math.pi * 0.5),
+        room_index,
+        signals.signal_index_for_name(laser_catcher_element.arguments[1]),
+    })
+end
+
+sk_definition_writer.add_definition('laser_catchers', 'struct LaserCatcherDefinition[]', '_geo', laser_catchers)
+
 return {
     box_droppers = box_droppers,
     buttons = buttons,
@@ -266,4 +316,7 @@ return {
     ball_launchers =  ball_launchers,
     clocks = clocks,
     security_cameras = security_cameras,
+    laser_emitters = laser_emitters,
+    laser_cubes = laser_cubes,
+    laser_catchers = laser_catchers,
 }

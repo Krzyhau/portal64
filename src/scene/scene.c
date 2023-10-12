@@ -242,6 +242,26 @@ void sceneInitNoPauseMenu(struct Scene* scene, int mainMenuMode) {
         securityCameraInit(&scene->securityCameras[i], &gCurrentLevel->securityCameras[i]);
     }
 
+    scene->laserEmitterCount = gCurrentLevel->laserEmitterCount;
+    scene->laserEmitters = malloc(sizeof(struct LaserEmitter) * scene->laserEmitterCount);
+    for (int i = 0 ; i < scene->laserEmitterCount; ++i) {
+        laserEmitterInit(&scene->laserEmitters[i], &gCurrentLevel->laserEmitters[i]);
+    }
+
+    scene->laserCubeCount = gCurrentLevel->laserCubeCount;
+    scene->laserCubes = malloc(sizeof(struct LaserCube) * scene->laserCubeCount);
+    for (int i = 0; i < scene->laserCubeCount; ++i)
+    {
+        laserCubeInit(&scene->laserCubes[i], &gCurrentLevel->laserCubes[i]);
+    }
+
+    scene->laserCatcherCount = gCurrentLevel->laserCatcherCount;
+    scene->laserCatchers = malloc(sizeof(struct LaserCatcher) * scene->laserCatcherCount);
+    for (int i = 0; i < scene->laserCatcherCount; ++i)
+    {
+        laserCatcherInit(&scene->laserCatchers[i], &gCurrentLevel->laserCatchers[i]);
+    }
+
     scene->continuouslyAttemptingPortalOpen=0;
     scene->checkpointState = SceneCheckpointStateSaved;
 
@@ -578,6 +598,21 @@ void sceneUpdate(struct Scene* scene) {
 
     for (int i = 0; i < scene->securityCameraCount; ++i) {
         securityCameraUpdate(&scene->securityCameras[i]);
+    }
+
+    for (int i = 0; i < scene->laserEmitterCount; ++i)
+    {
+        laserEmitterUpdate(&scene->laserEmitters[i]);
+    }
+
+    for (int i = 0; i < scene->laserCubeCount; ++i)
+    {
+        laserCubeUpdate(&scene->laserCubes[i]);
+    }
+
+    for (int i = 0; i < scene->laserCatcherCount; ++i)
+    {
+        laserCatcherUpdate(&scene->laserCatchers[i]);
     }
 
     playerUpdate(&scene->player);

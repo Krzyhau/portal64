@@ -242,7 +242,6 @@ DYNAMIC_MODEL_LIST = assets/models/cube/cube.blend \
 	assets/models/props/portal_cleanser.blend \
 	assets/models/props/light_rail_endcap.blend \
 	assets/models/props/laser_emitter.blend \
-	assets/models/props/laser_catcher.blend \
 	assets/models/cube/laser_cube.blend
 
 DYNAMIC_ANIMATED_MODEL_LIST = assets/models/pedestal.blend \
@@ -253,7 +252,8 @@ DYNAMIC_ANIMATED_MODEL_LIST = assets/models/pedestal.blend \
 	assets/models/props/door_01.blend \
 	assets/models/props/door_02.blend \
 	assets/models/props/security_camera.blend \
-	assets/models/props/switch001.blend
+	assets/models/props/switch001.blend \
+	assets/models/props/laser_catcher.blend
 
 ANIM_LIST = build/assets/models/pedestal_anim.o \
 	build/assets/models/player/chell_anim.o \

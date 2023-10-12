@@ -96,6 +96,9 @@ struct LevelDefinition* levelFixPointers(struct LevelDefinition* from, int point
     result->ballCatchers = ADJUST_POINTER_POS(result->ballCatchers, pointerOffset);
     result->clocks = ADJUST_POINTER_POS(result->clocks, pointerOffset);
     result->securityCameras = ADJUST_POINTER_POS(result->securityCameras, pointerOffset);
+    result->laserEmitters = ADJUST_POINTER_POS(result->laserEmitters, pointerOffset);
+    result->laserCubes = ADJUST_POINTER_POS(result->laserCubes, pointerOffset);
+    result->laserCatchers = ADJUST_POINTER_POS(result->laserCatchers, pointerOffset);
 
     result->animations = ADJUST_POINTER_POS(result->animations, pointerOffset);
 

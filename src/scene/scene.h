@@ -24,6 +24,9 @@
 #include "portal_gun.h"
 #include "clock.h"
 #include "security_camera.h"
+#include "laser_emitter.h"
+#include "laser_cube.h"
+#include "laser_catcher.h"
 #include "trigger_listener.h"
 #include "../effects/effects.h"
 
@@ -62,6 +65,9 @@ struct Scene {
     struct BallCatcher* ballCatchers;
     struct Clock* clocks;
     struct SecurityCamera* securityCameras;
+    struct LaserEmitter* laserEmitters;
+    struct LaserCube* laserCubes;
+    struct LaserCatcher* laserCatchers;
     struct SavedPortal savedPortal;
     struct Effects effects;
     struct Hud hud;
@@ -82,6 +88,9 @@ struct Scene {
     u8 ballCatcherCount;
     u8 clockCount;
     u8 securityCameraCount;
+    u8 laserEmitterCount;
+    u8 laserCubeCount;
+    u8 laserCatcherCount;
 
     u8 continuouslyAttemptingPortalOpen;
     u8 checkpointState;

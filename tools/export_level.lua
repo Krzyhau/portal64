@@ -67,4 +67,10 @@ sk_definition_writer.add_definition("level", "struct LevelDefinition", "_geo", {
     clockCount = #entities.clocks,
     securityCameras = sk_definition_writer.reference_to(entities.security_cameras, 1),
     securityCameraCount = #entities.security_cameras,
+    laserEmitters = sk_definition_writer.reference_to(entities.laser_emitters, 1),
+    laserEmitterCount = #entities.laser_emitters,
+    laserCubes = sk_definition_writer.reference_to(entities.laser_cubes, 1),
+    laserCubeCount = #entities.laser_cubes,
+    laserCatchers = sk_definition_writer.reference_to(entities.laser_catchers, 1),
+    laserCatcherCount = #entities.laser_catchers,
 })

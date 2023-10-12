@@ -353,6 +353,26 @@ struct SecurityCameraDefinition {
     short roomIndex;
 };
 
+struct LaserEmitterDefinition{
+    struct Vector3 position;
+    struct Quaternion rotation;
+    short roomIndex;
+    short signalIndex;
+};
+
+struct LaserCubeDefinition {
+    struct Vector3 position;
+    struct Quaternion rotation;
+    short roomIndex;
+};
+
+struct LaserCatcherDefinition {
+    struct Vector3 position;
+    struct Quaternion rotation;
+    short roomIndex;
+    short signalIndex;
+};
+
 struct LevelDefinition {
     struct CollisionObject* collisionQuads;
     struct StaticContentElement *staticContent;
@@ -385,6 +405,9 @@ struct LevelDefinition {
     struct BallCatcherDefinition* ballCatchers;
     struct ClockDefinition* clocks;
     struct SecurityCameraDefinition* securityCameras;
+    struct LaserEmitterDefinition* laserEmitters;
+    struct LaserCubeDefinition* laserCubes;
+    struct LaserCatcherDefinition* laserCatchers;
     short collisionQuadCount;
     short staticContentCount;
     short signalToStaticCount;
@@ -408,6 +431,9 @@ struct LevelDefinition {
     short ballCatcherCount;
     short clockCount;
     short securityCameraCount;
+    short laserEmitterCount;
+    short laserCubeCount;
+    short laserCatcherCount;
     short startLocation;
     short playerAnimatorIndex;
 };
