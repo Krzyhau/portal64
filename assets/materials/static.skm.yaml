@@ -1224,7 +1224,7 @@ materials:
     gDPSetCycleType: G_CYC_1CYCLE
 
     gSPGeometryMode:
-      set: [G_CULL_BACK]
+      set: [G_LIGHTING, G_CULL_BACK]
 
   laser_cube_activated:
     gDPSetTile: 
@@ -1239,7 +1239,7 @@ materials:
     gDPSetCycleType: G_CYC_1CYCLE
 
     gSPGeometryMode:
-      set: [G_CULL_BACK]
+      set: [G_LIGHTING, G_CULL_BACK]
 
   laser_cube_fizzled:
     gDPSetTile: 
