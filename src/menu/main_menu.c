@@ -61,6 +61,16 @@ void mainMenuUpdate(struct GameMenu* gameMenu) {
     gameMenuUpdate(gameMenu);
     
     mainMenuPlayAmbientSound();
+
+    for (int i = 0; i < gScene.laserEmitterCount; ++i)
+    {
+        laserEmitterUpdate(&gScene.laserEmitters[i]);
+    }
+
+    for (int i = 0; i < gScene.laserCubeCount; ++i)
+    {
+        laserCubeUpdate(&gScene.laserCubes[i]);
+    }
 }
 
 extern Lights1 gSceneLights;
