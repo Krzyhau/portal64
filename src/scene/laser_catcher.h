@@ -9,6 +9,7 @@
 enum LaserCatcherFlags
 {
     LaserCatcherFlagsPowered = (1 << 0),
+    LaserCatcherFlagsHitByLaser = (1 << 1),
 };
 
 struct LaserCatcher {

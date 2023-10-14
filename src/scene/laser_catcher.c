@@ -63,7 +63,7 @@ void laserCatcherRender(void* data, struct DynamicRenderDataList* renderList, st
 void laserCatcherHitByLaser(void *data)
 {
     struct LaserCatcher *laserCatcher = (struct LaserCatcher *)data;
-    laserCatcher->flags |= LaserCatcherFlagsPowered;
+    laserCatcher->flags |= LaserCatcherFlagsHitByLaser;
 }
 
 void laserCatcherInit(struct LaserCatcher* laserCatcher, struct LaserCatcherDefinition* definition) {
@@ -91,10 +91,17 @@ void laserCatcherInit(struct LaserCatcher* laserCatcher, struct LaserCatcherDefi
 
 void laserCatcherUpdate(struct LaserCatcher* laserCatcher) {
 
+    laserCatcher->flags &= ~LaserCatcherFlagsPowered;
+    if(laserCatcher->flags & LaserCatcherFlagsHitByLaser){
+        
+        laserCatcher->flags &= ~LaserCatcherFlagsHitByLaser;
+        laserCatcher->flags |= LaserCatcherFlagsPowered;
+    }
+
     if(laserCatcher->flags & LaserCatcherFlagsPowered) {
         signalsSend(laserCatcher->signalIndex);
 
-        struct Vector3 angularVelocity = (struct Vector3){.x = 0.0f, .y = -90.0f, .z = 0.0f};
+        struct Vector3 angularVelocity = (struct Vector3){.x = 0.0f, .y = -8.0f, .z = 0.0f};
 
         quatApplyAngularVelocity(
             &laserCatcher->armature.pose[PROPS_LASER_CATCHER_RING_BONE].rotation,
@@ -103,5 +110,5 @@ void laserCatcherUpdate(struct LaserCatcher* laserCatcher) {
             &laserCatcher->armature.pose[PROPS_LASER_CATCHER_RING_BONE].rotation
         );
     }
-    laserCatcher->flags &= ~LaserCatcherFlagsPowered;
+    
 }
