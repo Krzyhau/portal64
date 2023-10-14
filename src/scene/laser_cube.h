@@ -16,6 +16,7 @@ enum LaserCubeFlags
 struct LaserCube {
     struct CollisionObject collisionObject;
     struct RigidBody rigidBody;
+    struct Laser ownLaser;
     short dynamicId;
     float fizzleTime;
     short flags;

@@ -92,6 +92,9 @@ void laserCubeInit(struct LaserCube *laserCube, struct LaserCubeDefinition *defi
 
     laserCube->collisionObject.data = laserCube;
     laserCube->collisionObject.laser = laserCubeHitByLaser;
+
+    laserInit(&laserCube->ownLaser, &laserCube->collisionObject);
+    laserCube->ownLaser.localDirection = (struct Vector3){.x = 0.0f, .y = 0.0f, .z = -1.0f};
 }
 
 void laserCubeUpdate(struct LaserCube* laserCube) {
@@ -111,4 +114,9 @@ void laserCubeUpdate(struct LaserCube* laserCube) {
         laserCube->flags &= ~LaserCubeFlagsPowered;
     }
     laserCube->flags &= ~LaserCubeFlagsHitByLaser;
+
+    laserSetActive(&laserCube->ownLaser, laserCube->flags & LaserCubeFlagsPowered);
+
+    laserUpdatePosition(&laserCube->ownLaser, &laserCube->rigidBody.transform, laserCube->rigidBody.currentRoom);
+    laserUpdate(&laserCube->ownLaser);
 }

@@ -7,7 +7,7 @@
 
 struct LaserEmitter {
     struct Transform transform;
-    struct Laser* ownLaser;
+    struct Laser ownLaser;
     short roomIndex;
     short signalIndex;
 };

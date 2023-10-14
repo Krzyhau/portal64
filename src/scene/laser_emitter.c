@@ -50,11 +50,10 @@ void laserEmitterInit(struct LaserEmitter* laserEmitter, struct LaserEmitterDefi
     int dynamicId = dynamicSceneAdd(laserEmitter, laserEmitterRender, &laserEmitter->transform.position, 0.5f);
     dynamicSceneSetRoomFlags(dynamicId, ROOM_FLAG_FROM_INDEX(laserEmitter->roomIndex));
 
-    laserEmitter->ownLaser = malloc(sizeof(struct Laser));
-    laserInit(laserEmitter->ownLaser, NULL);
+    laserInit(&laserEmitter->ownLaser, NULL);
 }
 
 void laserEmitterUpdate(struct LaserEmitter* laserEmitter) {
-    laserUpdatePosition(laserEmitter->ownLaser, &laserEmitter->transform, laserEmitter->roomIndex);
-    laserUpdate(laserEmitter->ownLaser);
+    laserUpdatePosition(&laserEmitter->ownLaser, &laserEmitter->transform, laserEmitter->roomIndex);
+    laserUpdate(&laserEmitter->ownLaser);
 }

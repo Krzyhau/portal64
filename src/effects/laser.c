@@ -65,6 +65,7 @@ void laserGenerateSegmentMesh(struct Laser* laser, struct LaserSegment* segment,
 
 void laserRender(void *data, struct RenderScene *renderScene, struct Transform *fromView){
     struct Laser* laser = (struct Laser*)data;
+    if(laser->numSegments == 0) return;
 
     Vtx *vertices = renderStateRequestVertices(renderScene->renderState, laser->numSegments * 4);
     Vtx *currVtx = vertices;
@@ -109,13 +110,23 @@ void laserRender(void *data, struct RenderScene *renderScene, struct Transform *
 }
 
 void laserInit(struct Laser *laser, struct CollisionObject* emitterObject) {
-    // don't bother to estimate position and radius of the laser, so i made radius big so it always draws
+    // don't bother to estimate position and radius of the laser. just make it so big that it's always drawn
     dynamicSceneAddViewDependant(laser, laserRender, &laser->transform.position, 999.0f);
 
     laser->emitterObject = emitterObject;
 
     laser->segments = malloc(sizeof(struct LaserSegment) * LASER_MAX_SEGMENTS);
-    laser->numSegments = 0;
+    laserSetActive(laser, 1);
+
+    laser->localDirection = (struct Vector3){.x = 0.0f, .y = 1.0f, .z = 0.0f};
+}
+
+void laserSetActive(struct Laser *laser, int activeState){
+    if (activeState) {
+        laser->numSegments = 1;
+    } else {
+        laser->numSegments = 0;
+    }
 }
 
 void laserUpdatePosition(struct Laser *laser, struct Transform *transform, int roomIndex){
@@ -131,14 +142,15 @@ int laserRaycast(struct Laser* laser, struct Ray* ray, int room, struct RaycastH
 
     short prevCollisionLayer = 0;
 
-    if(laser->emitterObject != NULL){
+    if (laser->numSegments <= 1 && laser->emitterObject != NULL)
+    {
         prevCollisionLayer = laser->emitterObject->collisionLayers;
         laser->emitterObject->collisionLayers = 0;
     }
 
     result = collisionSceneRaycast(&gCollisionScene, room, ray, COLLISION_LAYERS_BLOCK_LASER, LASER_MAX_DISTANCE, 0, hit);
 
-    if (laser->emitterObject != NULL)
+    if (laser->numSegments <= 1 && laser->emitterObject != NULL)
     {
         laser->emitterObject->collisionLayers = prevCollisionLayer;
     }
@@ -147,11 +159,13 @@ int laserRaycast(struct Laser* laser, struct Ray* ray, int room, struct RaycastH
 }
 
 void laserUpdate(struct Laser *laser){
+    if(laser->numSegments == 0) return;
     laser->numSegments = 1;
 
     // first segment used as emitter's starting point
     struct Vector3 firstStart = {.x = 0.0f, .y = 0.0f, .z = 0.0f};
-    struct Vector3 firstEnd = {.x = 0.0f, .y = 0.5f, .z = 0.0f};
+    struct Vector3 firstEnd;
+    vector3Scale(&laser->localDirection, &firstEnd, 0.5f);
     transformPoint(&laser->transform, &firstStart, &laser->segments[0].start);
     transformPoint(&laser->transform, &firstEnd, &laser->segments[0].end);
 
@@ -173,7 +187,7 @@ void laserUpdate(struct Laser *laser){
 
         laser->numSegments++;
 
-        // logic for when hit a portal
+        // TODO: logic for when hit a portal
 
         if(hit.object != NULL && hit.object->laser != NULL){
             hit.object->laser(hit.object->data);
