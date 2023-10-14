@@ -3,6 +3,8 @@
 
 #include "../math/transform.h"
 #include "../levels/level_definition.h"
+#include "../physics/collision_object.h"
+#include "../sk64/skelatool_armature.h"
 
 enum LaserCatcherFlags
 {
@@ -10,12 +12,12 @@ enum LaserCatcherFlags
 };
 
 struct LaserCatcher {
-    struct Transform transform;
+    struct CollisionObject collisionObject;
+    struct RigidBody rigidBody;
     struct SKArmature armature;
-    int dynamicId;
-    short roomIndex;
     short signalIndex;
     short flags;
+    short dynamicId;
 };
 
 void laserCatcherInit(struct LaserCatcher* laserCatcher, struct LaserCatcherDefinition* definition);
