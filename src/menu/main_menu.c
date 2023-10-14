@@ -71,6 +71,8 @@ void mainMenuUpdate(struct GameMenu* gameMenu) {
     {
         laserCubeUpdate(&gScene.laserCubes[i]);
     }
+
+    effectsUpdate(&gScene.effects);
 }
 
 extern Lights1 gSceneLights;

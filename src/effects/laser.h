@@ -18,6 +18,7 @@ struct Laser
     struct Vector3 localDirection;
     struct LaserSegment* segments;
     short numSegments;
+    float particleTimeout;
 };
 
 void laserInit(struct Laser *laser, struct CollisionObject* emitterObject);

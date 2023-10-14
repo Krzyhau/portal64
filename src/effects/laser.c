@@ -9,10 +9,14 @@
 #include "../physics/collision.h"
 #include "../physics/contact_insertion.h"
 #include "../util/memory.h"
+#include "../util/time.h"
 #include "../build/assets/materials/static.h"
+#include "../effects/effect_definitions.h"
+#include "../scene/scene.h"
 
 #include "../math/vector3.h"
 #include "../math/quaternion.h"
+
 
 #define LASER_MAX_SEGMENTS 16
 #define LASER_MAX_DISTANCE 128.0f
@@ -205,6 +209,14 @@ void laserUpdate(struct Laser *laser){
 
         if(hit.object != NULL && hit.object->laser != NULL){
             hit.object->laser(hit.object->data);
+            break;
+        }
+
+        laser->particleTimeout -= FIXED_DELTA_TIME;
+        if (laser->particleTimeout < 0)
+        {
+            laser->particleTimeout = 0.2f;
+            effectsSplashPlay(&gScene.effects, &gLaserSpark, &hit.at, &hit.normal);
         }
 
         break;
