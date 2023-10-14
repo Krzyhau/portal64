@@ -46,6 +46,7 @@ void laserGenerateSegmentMesh(struct Laser* laser, struct LaserSegment* segment,
 
         struct Vector3 finalPos = (posIndex == 0) ? segment->start : segment->end;
         vector3AddScaled(&finalPos, &laserCotangent, (widthSign) ? width : -width, &finalPos);
+        vector3AddScaled(&finalPos, &laserTangent, ((posIndex > 0) ? width : -width)*0.5f, &finalPos);
 
         curr->v.ob[0] = (short)(finalPos.x * SCENE_SCALE);
         curr->v.ob[1] = (short)(finalPos.y * SCENE_SCALE);
