@@ -5,7 +5,7 @@
 #include "../player/player.h"
 #include "../controls/controller_actions.h"
 
-#define INTRO_BLACK_TIME 3.0f
+#define INTRO_BLACK_TIME 0.5f
 #define INTRO_FADE_TIME  1.0f
 #define INTRO_TOTAL_TIME  (INTRO_BLACK_TIME + INTRO_FADE_TIME)
 
