@@ -1,10 +1,11 @@
-operators:
-  []
 cutscenes:
   INTRO_CUTSCENE:
     - set_signal entry
-    - set_signal exit
     - q_sound SOUNDS_05_PART1_ENTRY_1 CH_GLADOS SUBTITLE_05_PART1_ENTRY_1
     - q_sound SOUNDS_05_PART1_ENTRY_2 CH_GLADOS SUBTITLE_05_PART1_ENTRY_2
     - wait_for_signal success
     - q_sound SOUNDS_05_PART1_SUCCESS_1 CH_GLADOS SUBTITLE_05_PART1_SUCCESS_1
+operators:
+  - almost_success = catcher1 and catcher2
+  - success = almost_success and catcher3
+  - exit = success and success
