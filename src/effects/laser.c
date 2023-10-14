@@ -168,6 +168,7 @@ void laserUpdate(struct Laser *laser){
     vector3Scale(&laser->localDirection, &firstEnd, 0.5f);
     transformPoint(&laser->transform, &firstStart, &laser->segments[0].start);
     transformPoint(&laser->transform, &firstEnd, &laser->segments[0].end);
+    laser->segments[1].start = laser->segments[0].end;
 
     struct Ray ray;
     ray.origin = laser->segments[0].start;
@@ -182,12 +183,25 @@ void laserUpdate(struct Laser *laser){
             break;
         }
 
-        laser->segments[laser->numSegments].start = ray.origin;
         laser->segments[laser->numSegments].end = hit.at;
 
         laser->numSegments++;
 
-        // TODO: logic for when hit a portal
+        int passedPortal = collisionSceneIsTouchingPortal(&hit.at, &hit.normal);
+
+        if(passedPortal > 0){
+            int portalIndex = passedPortal >> 7;
+            struct Transform portalTransform;
+            collisionSceneGetPortalTransform(portalIndex, &portalTransform);
+
+            transformPoint(&portalTransform, &hit.at, &ray.origin);
+            quatMultVector(&portalTransform.rotation, &ray.dir, &ray.dir);
+            currentRoom = gCollisionScene.portalRooms[1 - portalIndex];
+
+            laser->segments[laser->numSegments].start = ray.origin;
+
+            continue;
+        }
 
         if(hit.object != NULL && hit.object->laser != NULL){
             hit.object->laser(hit.object->data);
