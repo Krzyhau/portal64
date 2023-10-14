@@ -58,10 +58,21 @@ void laserCubeRender(void *data, struct DynamicRenderDataList *renderList, struc
     );
 }
 
+void laserCubeHitByLaser(void* data){
+    struct LaserCube *laserCube = (struct LaserCube *)data;
+    laserCube->flags |= LaserCubeFlagsHitByLaser;
+}
+
 void laserCubeInit(struct LaserCube *laserCube, struct LaserCubeDefinition *definition) {
     dynamicAssetModelPreload(CUBE_LASER_CUBE_DYNAMIC_MODEL);
 
-    collisionObjectInit(&laserCube->collisionObject, &gLaserCubeCollider, &laserCube->rigidBody, 1.0f, COLLISION_LAYERS_TANGIBLE | COLLISION_LAYERS_GRABBABLE | COLLISION_LAYERS_FIZZLER);
+    collisionObjectInit(
+        &laserCube->collisionObject, 
+        &gLaserCubeCollider,
+         &laserCube->rigidBody, 
+         1.0f, 
+         COLLISION_LAYERS_TANGIBLE | COLLISION_LAYERS_GRABBABLE | COLLISION_LAYERS_FIZZLER | COLLISION_LAYERS_BLOCK_LASER
+    );
     collisionSceneAddDynamicObject(&laserCube->collisionObject);
 
     laserCube->rigidBody.transform.position = definition->position;
@@ -77,6 +88,10 @@ void laserCubeInit(struct LaserCube *laserCube, struct LaserCubeDefinition *defi
     dynamicSceneSetRoomFlags(laserCube->dynamicId, ROOM_FLAG_FROM_INDEX(laserCube->rigidBody.currentRoom));
 
     laserCube->fizzleTime = 0.0f;
+    laserCube->flags = 0;
+
+    laserCube->collisionObject.data = laserCube;
+    laserCube->collisionObject.laser = laserCubeHitByLaser;
 }
 
 void laserCubeUpdate(struct LaserCube* laserCube) {
@@ -84,7 +99,16 @@ void laserCubeUpdate(struct LaserCube* laserCube) {
         dynamicSceneRemove(laserCube->dynamicId);
         collisionSceneRemoveDynamicObject(&laserCube->collisionObject);
         laserCube->dynamicId = INVALID_DYNAMIC_OBJECT;
+
+        return;
     }
 
     dynamicSceneSetRoomFlags(laserCube->dynamicId, ROOM_FLAG_FROM_INDEX(laserCube->rigidBody.currentRoom));
+
+    if (laserCube->flags & LaserCubeFlagsHitByLaser) {
+        laserCube->flags |= LaserCubeFlagsPowered;
+    } else {
+        laserCube->flags &= ~LaserCubeFlagsPowered;
+    }
+    laserCube->flags &= ~LaserCubeFlagsHitByLaser;
 }

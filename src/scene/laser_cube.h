@@ -5,9 +5,12 @@
 #include "../levels/level_definition.h"
 #include "../sk64/skelatool_armature.h"
 
+#include "../effects/laser.h"
+
 enum LaserCubeFlags
 {
     LaserCubeFlagsPowered = (1 << 0),
+    LaserCubeFlagsHitByLaser = (1 << 1),
 };
 
 struct LaserCube {

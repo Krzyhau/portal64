@@ -15,6 +15,7 @@ void collisionObjectInit(struct CollisionObject* object, struct ColliderTypeData
     object->flags = 0;
     object->data = 0;
     object->trigger = 0;
+    object->laser = 0;
     object->manifoldIds = 0;
 }
 

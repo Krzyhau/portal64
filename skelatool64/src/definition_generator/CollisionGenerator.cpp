@@ -100,7 +100,7 @@ std::shared_ptr<CollisionGeneratorOutput> generateCollision(const aiScene* scene
             collisionObject->Add(std::unique_ptr<DataChunk>(new StructureDataChunk(collider.BoundingBox())));
             collisionObject->AddPrimitive<const char*>(isTransparent ? 
                 "COLLISION_LAYERS_STATIC | COLLISION_LAYERS_BLOCK_BALL | COLLISION_LAYERS_TRANSPARENT | COLLISION_LAYERS_TANGIBLE" : 
-                "COLLISION_LAYERS_STATIC | COLLISION_LAYERS_BLOCK_BALL | COLLISION_LAYERS_TANGIBLE");
+                "COLLISION_LAYERS_STATIC | COLLISION_LAYERS_BLOCK_BALL | COLLISION_LAYERS_BLOCK_LASER | COLLISION_LAYERS_TANGIBLE");
             collisionObjectChunk->Add(std::move(collisionObject));
 
 

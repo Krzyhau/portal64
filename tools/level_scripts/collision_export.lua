@@ -285,6 +285,8 @@ for index, node in pairs(collider_nodes) do
 
         if is_transparent then 
             table.insert(collision_layers, 'COLLISION_LAYERS_TRANSPARENT')
+        else
+            table.insert(collision_layers, 'COLLISION_LAYERS_BLOCK_LASER')
         end
     end
         

@@ -3,15 +3,17 @@
 
 #include "../math/transform.h"
 #include "../levels/level_definition.h"
+#include "../effects/laser.h"
 
 struct LaserEmitter {
     struct Transform transform;
+    struct Laser* ownLaser;
     short roomIndex;
     short signalIndex;
 };
 
-void laserEmitterInit(struct LaserEmitter* laser, struct LaserEmitterDefinition* definition);
+void laserEmitterInit(struct LaserEmitter* laserEmitter, struct LaserEmitterDefinition* definition);
 
-void laserEmitterUpdate(struct LaserEmitter* laser);
+void laserEmitterUpdate(struct LaserEmitter* laserEmitter);
 
 #endif

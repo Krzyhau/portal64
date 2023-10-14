@@ -5,6 +5,7 @@
 
 #include "../levels/levels.h"
 #include "../levels/cutscene_runner.h"
+#include "../physics/collision_scene.h"
 #include "../util/memory.h"
 
 #include "../build/assets/models/dynamic_model_list.h"
@@ -17,7 +18,7 @@
 
 
 void laserEmitterRender(void* data, struct DynamicRenderDataList* renderList, struct RenderState* renderState) {
-    struct LaserEmitter *laser = (struct LaserEmitter *)data;
+    struct LaserEmitter *laserEmitter = (struct LaserEmitter *)data;
 
     Mtx* matrix = renderStateRequestMatrices(renderState, 1);
 
@@ -25,31 +26,35 @@ void laserEmitterRender(void* data, struct DynamicRenderDataList* renderList, st
         return;
     }
 
-    transformToMatrixL(&laser->transform, matrix, SCENE_SCALE);
+    transformToMatrixL(&laserEmitter->transform, matrix, SCENE_SCALE);
 
     dynamicRenderListAddData(
         renderList,
         dynamicAssetModel(PROPS_LASER_EMITTER_DYNAMIC_MODEL),
         matrix,
         LASER_EMITTER_INDEX,
-        &laser->transform.position,
+        &laserEmitter->transform.position,
         NULL
     );
 }
 
-void laserEmitterInit(struct LaserEmitter* laser, struct LaserEmitterDefinition* definition) {
+void laserEmitterInit(struct LaserEmitter* laserEmitter, struct LaserEmitterDefinition* definition) {
     dynamicAssetModelPreload(PROPS_LASER_EMITTER_DYNAMIC_MODEL);
 
-    laser->transform.position = definition->position;
-    laser->transform.rotation = definition->rotation;
-    laser->transform.scale = gOneVec;
-    laser->roomIndex = definition->roomIndex;
-    laser->signalIndex = definition->signalIndex;
+    laserEmitter->transform.position = definition->position;
+    laserEmitter->transform.rotation = definition->rotation;
+    laserEmitter->transform.scale = gOneVec;
+    laserEmitter->roomIndex = definition->roomIndex;
+    laserEmitter->signalIndex = definition->signalIndex;
 
-    int dynamicId = dynamicSceneAdd(laser, laserEmitterRender, &laser->transform.position, 0.5f);
-    dynamicSceneSetRoomFlags(dynamicId, ROOM_FLAG_FROM_INDEX(laser->roomIndex));
+    int dynamicId = dynamicSceneAdd(laserEmitter, laserEmitterRender, &laserEmitter->transform.position, 0.5f);
+    dynamicSceneSetRoomFlags(dynamicId, ROOM_FLAG_FROM_INDEX(laserEmitter->roomIndex));
+
+    laserEmitter->ownLaser = malloc(sizeof(struct Laser));
+    laserInit(laserEmitter->ownLaser, NULL);
 }
 
-void laserEmitterUpdate(struct LaserEmitter* laser) {
-    
+void laserEmitterUpdate(struct LaserEmitter* laserEmitter) {
+    laserUpdatePosition(laserEmitter->ownLaser, &laserEmitter->transform, laserEmitter->roomIndex);
+    laserUpdate(laserEmitter->ownLaser);
 }

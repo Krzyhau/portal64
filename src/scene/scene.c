@@ -65,7 +65,7 @@ void sceneInitDynamicColliders(struct Scene* scene) {
         colliderType[i].bounce = 0.5f;
         colliderType[i].friction = 0.5f;
         colliderType[i].callbacks = &gCollisionBoxCallbacks;
-        collisionObjectInit(&colliders[i], &colliderType[i], &body[i], 1.0f, COLLISION_LAYERS_TANGIBLE | COLLISION_LAYERS_BLOCK_BALL | COLLISION_LAYERS_STATIC);
+        collisionObjectInit(&colliders[i], &colliderType[i], &body[i], 1.0f, COLLISION_LAYERS_TANGIBLE | COLLISION_LAYERS_BLOCK_BALL | COLLISION_LAYERS_BLOCK_LASER | COLLISION_LAYERS_STATIC);
         rigidBodyMarkKinematic(&body[i]);
 
         body[i].currentRoom = gCurrentLevel->dynamicBoxes[i].roomIndex;

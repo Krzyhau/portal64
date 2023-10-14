@@ -12,12 +12,14 @@
 #define COLLISION_LAYERS_FIZZLER            (1 << 4)
 #define COLLISION_LAYERS_BLOCK_PORTAL       (1 << 5)
 #define COLLISION_LAYERS_BLOCK_BALL         (1 << 6)
+#define COLLISION_LAYERS_BLOCK_LASER        (1 << 7)
 
 #define COLLISION_OBJECT_HAS_CONTACTS       (1 << 0)
 #define COLLISION_OBJECT_PLAYER_STANDING    (1 << 1)
 #define COLLISION_OBJECT_INTERACTED         (1 << 2)
 
-typedef void (*TriggerCallback)(void* data, struct CollisionObject* objectEnteringTrigger);
+typedef void (*TriggerCallback)(void *data, struct CollisionObject *objectEnteringTrigger);
+typedef void (*LaserCallback)(void *data);
 
 struct CollisionObject {
     struct ColliderTypeData *collider;
@@ -27,6 +29,7 @@ struct CollisionObject {
     short flags;
     void* data;
     TriggerCallback trigger;
+    LaserCallback laser;
     u32 manifoldIds;
 };
 
