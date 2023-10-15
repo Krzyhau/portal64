@@ -55,6 +55,7 @@ void portalUpdate(struct Portal* portal, int isOpen);
 
 void portalCalculateBB(struct Transform* portalTransform, struct Box3D* bb);
 
+int portalBumpShotPoint(struct Portal *portal, struct Transform *portalAt);
 int portalAttachToSurface(struct Portal* portal, struct PortalSurface* surface, int surfaceIndex, struct Transform* portalAt, int just_checking);
 void portalCheckForHoles(struct Portal* portals);
 

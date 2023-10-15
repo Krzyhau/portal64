@@ -102,6 +102,40 @@ void portalCalculateBB(struct Transform* portalTransform, struct Box3D* bb) {
     box3DExtendDirection(bb, &nextDir, bb);
 }
 
+int portalBumpShotPoint(struct Portal *bumpingPortal, struct Transform *shotPortalAt)
+{
+    struct Vector3 portalNormal;
+    struct Vector3 shotNormal;
+    quatMultVector(&bumpingPortal->rigidBody.transform.rotation, &gForward, &portalNormal);
+    quatMultVector(&shotPortalAt->rotation, &gForward, &shotNormal);
+
+    // shot surface must face the same direction as bumping portal
+    if(vector3Dot(&portalNormal, &shotNormal) > -0.9f){
+        return 0;
+    }
+
+    struct Vector3 localShotAt;
+    transformPointInverse(&bumpingPortal->rigidBody.transform, &shotPortalAt->position, &localShotAt);
+
+    // shot point must lie on a portal surface
+    if(fabsf(localShotAt.z) > 0.1f){
+        return 0;
+    }
+
+    // potentially placed portal must be intersecting bumping portal to be bumped
+    if(!(fabsf(localShotAt.x) < PORTAL_COVER_WIDTH && fabsf(localShotAt.y) < PORTAL_COVER_HEIGHT)){
+        return 0;
+    }
+
+    // bump point by moving it horizontally
+    if(localShotAt.x == 0.0f){ localShotAt.x = 1.0f; }
+    localShotAt.x = signf(localShotAt.x) * (PORTAL_COVER_WIDTH + 0.1f);
+
+    transformPoint(&bumpingPortal->rigidBody.transform, &localShotAt, &shotPortalAt->position);
+
+    return 1;
+}
+
 int portalAttachToSurface(struct Portal* portal, struct PortalSurface* surface, int surfaceIndex, struct Transform* portalAt, int just_checking) {
     // determine if portal is on surface
     if (!portalSurfaceIsInside(surface, portalAt)) {
