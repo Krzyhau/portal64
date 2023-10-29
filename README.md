@@ -11,4 +11,4 @@ The mod aims to create a fully-functional replica of 20th test chamber from Port
 - [X] Laser redirection cubes
 - [X] Laser catchers
 
-For now, if you want to play it, you have to compile it for yourself. Follow the compilation process from the README.md in the [Portal 64 repository](https://github.com/lambertjamesd/portal64/) - it should be exactly the same.
+If you want to play it, dowload the patch file and follow the patching instructions in the [Release page](https://github.com/Krzyhau/portal64-triple-laser/releases/tag/v0.00000000000000000000001). However, you're free to compile it for yourself if you wish. Follow the compilation process from the README.md in the [Portal 64 repository](https://github.com/lambertjamesd/portal64/) - it should be exactly the same.
